@@ -1,7 +1,7 @@
 package Assignment2.Exceptions;
 
-public class IllegalMove extends RuntimeException {
-    public IllegalMove(String message) {
+public class IllegalMoveException extends RuntimeException {
+    public IllegalMoveException(String message) {
         super(message);
     }
 }

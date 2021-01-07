@@ -1,11 +1,15 @@
 package Assignment2.Game;
 
 import Assignment2.Constants;
+import Assignment2.Exceptions.CovidInfectionExeption;
+import Assignment2.Exceptions.IllegalMoveException;
+import Assignment2.Exceptions.PlayerDiedException;
 import Assignment2.Shapes.Covid;
 import Assignment2.Shapes.MazeWall;
 import Assignment2.Shapes.Shape;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Maze {
 
@@ -39,79 +43,93 @@ public class Maze {
         }
     }
 
-    public boolean inBounds(int row, int col) {
-        return (row >= 0 && row <= currentMaze.length && col >= 0 && col <= currentMaze[0].length);
+    public int generateRandom() {
+        return (int) (Math.random() * 8);
     }
 
-    public boolean checkIfMoveLegal(int row, int col) {
-        return !((currentMaze[row][col] instanceof Covid) || (currentMaze[row][col] instanceof MazeWall));
+    public ArrayList<Integer[]> getPossibleMoves(ArrayList<Integer[]> possibleMoves, int row, int col) {
+        possibleMoves.add(new Integer[]{row + 1, col});
+        possibleMoves.add(new Integer[]{row - 1, col});
+        possibleMoves.add(new Integer[]{row, col + 1});
+        possibleMoves.add(new Integer[]{row, col - 1});
+        possibleMoves.add(new Integer[]{row + 1, col + 1});
+        possibleMoves.add(new Integer[]{row - 1, col - 1});
+        possibleMoves.add(new Integer[]{row - 1, col + 1});
+        possibleMoves.add(new Integer[]{row + 1, col - 1});
+        return possibleMoves;
     }
 
-    public void swapPosition(int newRow, int newCol) {
-        currentMaze[playerRow][playerCol] = Constants.SHAPE_FACTORY.getShape(' ');
-        currentMaze[newRow][newCol] = Constants.SHAPE_FACTORY.getShape('X');
+    public void randomlyMoveCovid() {
+        ArrayList<Integer[]> possibleMoves;
+        Integer[] nextMove;
+
+        for (int row = 0; row < currentMaze.length; row++) {
+            for (int col = 0; col < currentMaze[0].length; col++) {
+                if (currentMaze[row][col] instanceof Covid) {
+                    try {
+                        possibleMoves = new ArrayList<>();
+                        possibleMoves = getPossibleMoves(possibleMoves, row, col);
+                        nextMove = possibleMoves.get(generateRandom());
+                        validateMove(nextMove[0], nextMove[1]);
+                        if (nextMove[0] == playerRow && nextMove[1] == playerCol) {
+                            throw new PlayerDiedException("Player got covid");
+                        }
+                        currentMaze[row][col] = Constants.SHAPE_FACTORY.getShape(' ');
+                        currentMaze[nextMove[0]][nextMove[1]] = Constants.SHAPE_FACTORY.getShape('C');
+                    } catch (
+                            IllegalMoveException
+                                    | IndexOutOfBoundsException
+                                    | CovidInfectionExeption
+                                    event) {
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void validateMove(int row, int col) {
+        if (!(row >= 0 && row < currentMaze.length && col >= 0 && col < currentMaze[0].length)) {
+            throw new IndexOutOfBoundsException("out of bounds");
+        }
+        if (currentMaze[row][col] instanceof Covid) {
+            throw new CovidInfectionExeption("Covid");
+        }
+        if (currentMaze[row][col] instanceof MazeWall) {
+            throw new IllegalMoveException("Wall");
+        }
     }
 
     public void movePlayerUp() {
-        try {
-            int newRow = playerRow - 1;
-            int newCol = playerCol;
-            if (inBounds(newRow, newCol) && checkIfMoveLegal(newRow, newCol)) {
-                swapPosition(--playerRow, playerCol);
-                currentMaze[playerRow][playerCol] = Constants.SHAPE_FACTORY.getShape(' ');
-                currentMaze[--playerRow][playerCol] = Constants.SHAPE_FACTORY.getShape('X');
-            } else {
-                throw new ArrayIndexOutOfBoundsException("out of bounds");
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(e.getMessage());
-        }
+        int newRow = playerRow - 1;
+        int newCol = playerCol;
+        validateMove(newRow, newCol);
+        currentMaze[playerRow][playerCol] = Constants.SHAPE_FACTORY.getShape(' ');
+        currentMaze[--playerRow][playerCol] = Constants.SHAPE_FACTORY.getShape('X');
     }
 
-    public void movePlayerDown() {
-        try {
-            int newRow = playerRow + 1;
-            int newCol = playerCol;
-            if (inBounds(newRow, newCol) && checkIfMoveLegal(newRow, newCol)) {
-                currentMaze[playerRow][playerCol] = Constants.SHAPE_FACTORY.getShape(' ');
-                currentMaze[++playerRow][playerCol] = Constants.SHAPE_FACTORY.getShape('X');
-            } else {
-                throw new ArrayIndexOutOfBoundsException("out of bounds");
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(e.getMessage());
-        }
-
+    public void movePlayerDown() throws IllegalMoveException {
+        int newRow = playerRow + 1;
+        int newCol = playerCol;
+        validateMove(newRow, newCol);
+        currentMaze[playerRow][playerCol] = Constants.SHAPE_FACTORY.getShape(' ');
+        currentMaze[++playerRow][playerCol] = Constants.SHAPE_FACTORY.getShape('X');
     }
 
     public void movePlayerLeft() {
-        try {
-            int newRow = playerRow;
-            int newCol = playerCol - 1;
-            if (inBounds(newRow, newCol) && checkIfMoveLegal(newRow, newCol)) {
-                currentMaze[playerRow][playerCol] = Constants.SHAPE_FACTORY.getShape(' ');
-                currentMaze[playerRow][--playerCol] = Constants.SHAPE_FACTORY.getShape('X');
-            } else {
-                throw new ArrayIndexOutOfBoundsException("out of bounds");
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(e.getMessage());
-        }
+        int newRow = playerRow;
+        int newCol = playerCol - 1;
+        validateMove(newRow, newCol);
+        currentMaze[playerRow][playerCol] = Constants.SHAPE_FACTORY.getShape(' ');
+        currentMaze[playerRow][--playerCol] = Constants.SHAPE_FACTORY.getShape('X');
     }
 
     public void movePlayerRight() {
-        try {
-            int newRow = playerRow;
-            int newCol = playerCol + 1;
-            if (inBounds(newRow, newCol) && checkIfMoveLegal(newRow, newCol)) {
-                currentMaze[playerRow][playerCol] = Constants.SHAPE_FACTORY.getShape(' ');
-                currentMaze[playerRow][++playerCol] = Constants.SHAPE_FACTORY.getShape('X');
-            } else {
-                throw new ArrayIndexOutOfBoundsException("out of bounds");
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(e.getMessage());
-        }
+        int newRow = playerRow;
+        int newCol = playerCol + 1;
+        validateMove(newRow, newCol);
+        currentMaze[playerRow][playerCol] = Constants.SHAPE_FACTORY.getShape(' ');
+        currentMaze[playerRow][++playerCol] = Constants.SHAPE_FACTORY.getShape('X');
     }
 
     @Override
