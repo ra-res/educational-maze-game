@@ -39,8 +39,6 @@ public class Constants {
                     {'#', 'X', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', ' ', '#', '#', '#', '#', '#'},
             };
     ;
-    static public final int MAZE_ROW_LENGTH = INITIAL_MAZE_CONFIG.length;
-    static public final int MAZE_COL_LENGTH = INITIAL_MAZE_CONFIG[0].length;
     static public final int PLAYER_ROW_START_POSITION = INITIAL_MAZE_CONFIG.length - 1;
     static public final int PLAYER_COL_START_POSITION = 1;
 
