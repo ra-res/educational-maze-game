@@ -11,9 +11,7 @@ public class Window extends JFrame {
     Maze maze;
 
     public Window() {
-
         maze = new Maze();
-
         setLayout(new BorderLayout());
         initLifeBar();
         initMazePanel();
@@ -29,9 +27,8 @@ public class Window extends JFrame {
         score = new JPanel();
         score.add(new JLabel("Health"));
         score.setBackground(Color.GREEN);
-        score.setSize(new Dimension(100, Constants.WINDOW_HEIGHT));
+//        score.setSize(new Dimension(100, Constants.WINDOW_HEIGHT - 500));
         add(score, BorderLayout.NORTH);
-
     }
 
     public void initMazePanel() {
@@ -42,9 +39,7 @@ public class Window extends JFrame {
 
     public void resetMazePanel() {
         remove(mazePanel);
-        mazePanel = new JPanel(new GridLayout(Constants.MAZE_ROW_LENGTH, Constants.MAZE_COL_LENGTH));
-        maze.draw(mazePanel);
-        add(mazePanel, BorderLayout.CENTER);
+        initMazePanel();
         revalidate();
         repaint();
     }
