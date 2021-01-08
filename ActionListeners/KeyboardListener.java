@@ -1,14 +1,15 @@
-package Assignment2;
+package Assignment2.ActionListeners;
 
-import Assignment2.Exceptions.CovidInfectionExeption;
+import Assignment2.Constants;
+import Assignment2.Exceptions.CovidInfectionException;
 import Assignment2.Exceptions.IllegalMoveException;
 import Assignment2.Exceptions.PlayerDiedException;
 import Assignment2.Exceptions.PlayerWonException;
 import Assignment2.Game.Maze;
+import Assignment2.Window;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.concurrent.TimeUnit;
 
 public class KeyboardListener implements KeyListener {
 
@@ -34,7 +35,6 @@ public class KeyboardListener implements KeyListener {
                     maze.movePlayerUp();
                     maze.randomlyMoveCovid();
                     window.initMazePanel();
-                    System.out.println("pressed key");
                     break;
                 case KeyEvent.VK_DOWN:
                     maze.movePlayerDown();
@@ -51,29 +51,22 @@ public class KeyboardListener implements KeyListener {
                     maze.randomlyMoveCovid();
                     window.initMazePanel();
                     break;
-                case KeyEvent.VK_SPACE:
-                    System.out.println("Spacebar");
-//                this.game.initialise();
-//                this.game.repaint();
-//                this.game.revalidate(); // repaints node children, rather than node
-                    break;
                 default:
                     break;
             }
         } catch (IllegalMoveException
                 | IndexOutOfBoundsException
-                | CovidInfectionExeption event) {
+                | CovidInfectionException
+                ifExceptionsOccurIgnoreMove
+        ) {
 
-        } catch (PlayerDiedException event) {
-            try {
-                window.initMazePanel();
-                TimeUnit.SECONDS.sleep(1);
-                window.gameLostPanel();
-            } catch (InterruptedException interruptedException) {
-                interruptedException.printStackTrace();
-            }
-        } catch (PlayerWonException event) {
-            System.out.println("you won dude");
+        } catch (PlayerDiedException playerDiedException) {
+            window.initMazePanel();
+            window.gameLostPanel(playerDiedException.getMessage());
+            Constants.SCORE_MANAGER.saveScores();
+        } catch (PlayerWonException playerWonException) {
+            window.gameWonScreen(playerWonException.getMessage());
+            Constants.SCORE_MANAGER.saveScores();
         }
     }
 
