@@ -15,7 +15,7 @@ public abstract class Shape {
         label.setPreferredSize(new Dimension(Constants.GRID_WIDTH, Constants.GRID_HEIGHT));
         label.setBackground(colour);
         label.setOpaque(true);
-        label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+//        label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
         return label;
     }
 }
