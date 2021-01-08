@@ -1,22 +1,21 @@
 package Assignment2;
 
-import Assignment2.Game.Game;
-
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class MouseClickListener implements MouseListener {
 
-    private Game game; // game passed through to allow for game manipulation
+    Window window;
 
-    public MouseClickListener(Game game) {
-        this.game = game;
+
+    public MouseClickListener(Window window) {
+        this.window = window;
+
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        e.getComponent().setBackground(Color.RED);
+        window.initMazePanel();
     }
 
     @Override
