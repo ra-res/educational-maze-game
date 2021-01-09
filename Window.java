@@ -38,10 +38,10 @@ public class Window extends JFrame {
 
     public void initWelcomeScreen() {
         mainPanel = new JPanel(new GridLayout(10, 1));
-        addLabels(mainPanel, new String[]{"Welcome to the game!!!",
-                "Rules:",
-                "Stay away from Covid Patients",
-                "If a Covid Patient touches you, you lose.",
+        addLabels(mainPanel, new String[]{"Hello World!",
+                "Socially distance yourself",
+                "from other people (green square)",
+                "You lose if you get too close",
                 "Finish the maze to win!",
         });
 
