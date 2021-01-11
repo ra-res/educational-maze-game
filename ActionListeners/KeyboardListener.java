@@ -16,17 +16,28 @@ public class KeyboardListener implements KeyListener {
     Maze maze;
     Window window;
 
+    /**
+     * public KeyboardListener
+     * Constructor of KeyboardListerner class
+     *
+     * @param window - Window class that extends JFrame
+     *               - Allows us to update the window after a change is made in the game
+     * @param maze   - Game configuration class
+     *               - Gives us access to the methods that edits the game state
+     */
     public KeyboardListener(Window window, Maze maze) {
         this.window = window;
         this.maze = maze;
     }
 
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
+    /**
+     * public void keyPressed
+     * Method overrides the KeyListener method keyPressed
+     * Listens to a keyboard event and identifies which key it is.
+     * Everything is inside a Try/Catch block as exceptions are used for the logic of the game.
+     *
+     * @param e - Keyboard event
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         try {
@@ -59,7 +70,7 @@ public class KeyboardListener implements KeyListener {
                 | CovidInfectionException
                 ifExceptionsOccurIgnoreMove
         ) {
-
+            // Empty catch block.
         } catch (PlayerDiedException playerDiedException) {
             window.initMazePanel();
             window.gameLostPanel(playerDiedException.getMessage());
@@ -68,6 +79,11 @@ public class KeyboardListener implements KeyListener {
             window.gameWonScreen(playerWonException.getMessage());
             Constants.SCORE_MANAGER.saveScores();
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
     }
 
     @Override
