@@ -4,6 +4,11 @@ import Assignment2.Shapes.ShapeFactory;
 
 import java.awt.*;
 
+/**
+ * Class Constants is used to store public final variables
+ * Mostly used for the configuration side of the game (like a settings panel)
+ * Allows to easily edit the different aspects of the game such as colour theme etc
+ */
 public class Constants {
     static public final String SCORE_PATH = "score.txt";
     static public final ShapeFactory SHAPE_FACTORY = new ShapeFactory();
