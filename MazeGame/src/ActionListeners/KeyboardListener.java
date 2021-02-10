@@ -1,29 +1,26 @@
-package Assignment2.ActionListeners;
+package ActionListeners;
 
-import Assignment2.Constants;
-import Assignment2.Exceptions.CovidInfectionException;
-import Assignment2.Exceptions.IllegalMoveException;
-import Assignment2.Exceptions.PlayerDiedException;
-import Assignment2.Exceptions.PlayerWonException;
-import Assignment2.Game.Maze;
-import Assignment2.Window;
-
+import Exceptions.CovidInfectionException;
+import Exceptions.IllegalMoveException;
+import Exceptions.PlayerDiedException;
+import Exceptions.PlayerWonException;
+import Game.Maze;
+import Game.Window;
+import Configuration.Constants;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyboardListener implements KeyListener {
-
     Maze maze;
     Window window;
 
     /**
-     * public KeyboardListener
-     * Constructor of KeyboardListerner class
+     * public KeyboardListener Constructor of KeyboardListerner class
      *
-     * @param window - Window class that extends JFrame
-     *               - Allows us to update the window after a change is made in the game
-     * @param maze   - Game configuration class
-     *               - Gives us access to the methods that edits the game state
+     * @param window - Window class that extends JFrame - Allows us to update the
+     *               window after a change is made in the game
+     * @param maze   - Game configuration class - Gives us access to the methods
+     *               that edits the game state
      */
     public KeyboardListener(Window window, Maze maze) {
         this.window = window;
@@ -31,10 +28,9 @@ public class KeyboardListener implements KeyListener {
     }
 
     /**
-     * public void keyPressed
-     * Method overrides the KeyListener method keyPressed
-     * Listens to a keyboard event and identifies which key it is.
-     * Everything is inside a Try/Catch block as exceptions are used for the logic of the game.
+     * public void keyPressed Method overrides the KeyListener method keyPressed
+     * Listens to a keyboard event and identifies which key it is. Everything is
+     * inside a Try/Catch block as exceptions are used for the logic of the game.
      *
      * @param e - Keyboard event
      */
@@ -65,29 +61,24 @@ public class KeyboardListener implements KeyListener {
                 default:
                     break;
             }
-        } catch (IllegalMoveException
-                | IndexOutOfBoundsException
-                | CovidInfectionException
-                ifExceptionsOccurIgnoreMove
-        ) {
+        } catch (IllegalMoveException | IndexOutOfBoundsException
+                | CovidInfectionException ifExceptionsOccurIgnoreMove) {
             // Empty catch block.
         } catch (PlayerDiedException playerDiedException) {
+            Constants.GAME_ROUND.endGame(playerDiedException);
             window.initMazePanel();
-            window.gameLostPanel(playerDiedException.getMessage());
-            Constants.SCORE_MANAGER.saveScores();
+            window.gameLostPanel(playerDiedException.getMessage(), playerDiedException);
         } catch (PlayerWonException playerWonException) {
-            window.gameWonScreen(playerWonException.getMessage());
-            Constants.SCORE_MANAGER.saveScores();
+            Constants.GAME_ROUND.endGame(playerWonException);
+            window.gameWonScreen(playerWonException.getMessage(), playerWonException);
         }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 }

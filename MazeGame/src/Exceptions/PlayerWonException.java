@@ -1,8 +1,8 @@
-package Assignment2.Exceptions;
+package Exceptions;
 
 /**
- * class PlayerWonException extends RuntimeException
- * Custom exception thrown when the player won the game.
+ * class PlayerWonException extends RuntimeException Custom exception thrown
+ * when the player won the game.
  */
 public class PlayerWonException extends RuntimeException {
     public PlayerWonException(String message) {

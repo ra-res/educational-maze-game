@@ -1,7 +1,7 @@
-package Assignment2.Tests;
+package Tests;
 
-import Assignment2.Constants;
-import Assignment2.Game.Maze;
+import Configuration.Constants;
+import Game.Maze;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,4 +23,3 @@ public class FactoryTester extends JFrame {
         new FactoryTester();
     }
 }
-

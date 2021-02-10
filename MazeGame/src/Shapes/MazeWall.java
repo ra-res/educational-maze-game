@@ -1,11 +1,10 @@
-package Assignment2.Shapes;
-
-import Assignment2.Constants;
+package Shapes;
 
 import javax.swing.*;
 
-public class MazeWall extends Shape {
+import Configuration.Constants;
 
+public class MazeWall extends Shape {
     @Override
     public void draw(JPanel main) {
         main.add(makeLabel(Constants.WALL_COLOUR));
