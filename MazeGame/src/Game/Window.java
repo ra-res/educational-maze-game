@@ -40,7 +40,7 @@ public class Window extends JFrame {
      * void init() Configuration method for the JFrame
      */
     public void init() {
-        setTitle("1904362");
+        setTitle("Educational Game");
         setLayout(new BorderLayout());
         initWelcomeScreen();
         pack();
@@ -237,13 +237,12 @@ public class Window extends JFrame {
             for (int score : topScores) {
                 if (score == Constants.TIMER.getTimeInMilliseconds() && !labeled
                         && runtimeException instanceof PlayerWonException) {
-                    mainPanel.add(
-                            styleLabel(new JLabel(String.format("%d)   %d seconds <-  your score", counter++, score)),
-                                    Color.YELLOW));
+                    mainPanel.add(styleLabel(
+                            new JLabel(String.format("%d) %d seconds <- your score", counter++, score)), Color.YELLOW));
                     labeled = true;
                 } else {
                     mainPanel.add(
-                            styleLabel(new JLabel(String.format("%d)   %d seconds", counter++, score)), Color.WHITE));
+                            styleLabel(new JLabel(String.format("%d) %d seconds", counter++, score)), Color.WHITE));
                 }
             }
         } else {
