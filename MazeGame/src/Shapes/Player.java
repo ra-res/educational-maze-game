@@ -1,8 +1,8 @@
-package Assignment2.Shapes;
-
-import Assignment2.Constants;
+package Shapes;
 
 import javax.swing.*;
+
+import Configuration.Constants;
 
 public class Player extends Shape {
     @Override

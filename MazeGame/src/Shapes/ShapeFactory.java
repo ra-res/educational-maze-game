@@ -1,10 +1,9 @@
-package Assignment2.Shapes;
+package Shapes;
 
 public class ShapeFactory {
 
     /**
-     * Shape getShape()
-     * Implementation of shape factory pattern
+     * Shape getShape() Implementation of shape factory pattern
      *
      * @param shapeType - type of shape to be returned
      * @return - a object that extends Shape

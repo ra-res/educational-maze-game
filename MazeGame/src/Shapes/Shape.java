@@ -1,6 +1,6 @@
-package Assignment2.Shapes;
+package Shapes;
 
-import Assignment2.Constants;
+import Configuration.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,17 +8,15 @@ import java.awt.*;
 public abstract class Shape {
 
     /**
-     * abstract void draw()
-     * Abstract method that all sub-classes should implement
+     * abstract void draw() Abstract method that all sub-classes should implement
      *
      * @param main - JPanel to be drawn to
      */
     public abstract void draw(JPanel main);
 
     /**
-     * JLabel makeLabel()
-     * Default implementation of the makeLabel method
-     * Improves re-usability of code
+     * JLabel makeLabel() Default implementation of the makeLabel method Improves
+     * re-usability of code
      *
      * @param colour - Colour for the label
      * @return - Styled JLabel
@@ -29,7 +27,7 @@ public abstract class Shape {
         label.setPreferredSize(new Dimension(Constants.GRID_WIDTH, Constants.GRID_HEIGHT));
         label.setBackground(colour);
         label.setOpaque(true);
-//        label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+        // label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
         return label;
     }
 }
