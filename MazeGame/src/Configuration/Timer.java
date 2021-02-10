@@ -1,12 +1,15 @@
-package Game;
+package Configuration;
 
 public class Timer {
-/**
- * Class Timer
- * Allows to timing how long it takes for the player to finish the game
- */
+    /**
+     * Class Timer Allows to timing how long it takes for the player to finish the
+     * game
+     */
     private long startTime;
     private long endTime;
+
+    public Timer() {
+    }
 
     public void startTimer() {
         startTime = System.nanoTime();
